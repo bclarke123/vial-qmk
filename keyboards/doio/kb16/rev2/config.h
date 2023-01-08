@@ -50,6 +50,9 @@
 
     /* Use the custom font */
     #define OLED_FONT_H "./lib/glcdfont.c"
+
+    #define OLED_BRIGHTNESS 128
+    #define OLED_TIMEOUT 0
 #endif
 
 <<<<<<< HEAD
