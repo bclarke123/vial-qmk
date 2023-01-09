@@ -49,7 +49,7 @@
     #define OLED_FONT_H "./lib/glcdfont.c"
 
     #define OLED_BRIGHTNESS 128
-    #define OLED_TIMEOUT 0
+    #define OLED_TIMEOUT 1200000
 #endif
 
 /* Encoder pins */
