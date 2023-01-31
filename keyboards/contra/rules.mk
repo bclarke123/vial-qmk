@@ -2,6 +2,9 @@
 MCU = RP2040
 BOOTLOADER = rp2040
 
+BOARD = GENERIC_RP_RP2040
+OPT_DEFS += -DHAL_USE_I2C=TRUE
+
 # Build Options
 #   change yes to no to disable
 #
@@ -21,3 +24,6 @@ LAYOUTS_HAS_RGB = no
 RGBLIGHT_SUPPORTED = no
 AUDIO_SUPPORTED = no
 BACKLIGHT_SUPPORTED = no
+
+POINTING_DEVICE_ENABLE = yes
+POINTING_DEVICE_DRIVER = pimoroni_trackball
