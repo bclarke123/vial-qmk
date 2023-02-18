@@ -1,0 +1,34 @@
+#pragma once
+
+#include "config_common.h"
+
+#undef VENDOR_ID
+#define VENDOR_ID 0xBE17
+
+#undef PRODUCT_ID
+#define PRODUCT_ID 0x0060
+
+#undef DEVICE_VER
+#define DEVICE_VER 0x0001
+
+#undef MANUFACTURER
+#define MANUFACTURER Ben
+
+/* key matrix size */
+#define MATRIX_ROWS 10
+#define MATRIX_COLS 7
+
+/* key matrix pins */
+#define MATRIX_ROW_PINS { GP0, GP1, GP2, GP3, GP4, GP5, GP6, GP7, GP8, GP9 }
+#define MATRIX_COL_PINS { GP16, GP17, GP18, GP19, GP20, GP21, GP22 }
+
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP25
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500U
+
+#define RGB_DI_PIN GP25
+
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION COL2ROW
+
+#define DEBOUNCE 5
