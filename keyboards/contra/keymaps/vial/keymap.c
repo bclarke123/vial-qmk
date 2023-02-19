@@ -14,8 +14,10 @@
 
 #include QMK_KEYBOARD_H
 
+#include "drivers/sensors/pimoroni_trackball.h"
+#include "pointing_device.h"
 
-enum planck_layers {
+enum contra_layers {
   _BASE,
   _LOWER,
   _RAISE,
@@ -24,6 +26,10 @@ enum planck_layers {
   _LAYER6,
   _LAYER7,
   _LAYER8
+};
+
+enum custom_keycodes {
+    BALL_SCR = SAFE_RANGE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -40,10 +46,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------'
    */
   [_BASE] = LAYOUT_planck_mit(
-    KC_ESC,      KC_Q,    KC_W,    KC_E,    KC_R,       KC_T,    KC_Y,    KC_U,         KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,      KC_A,    KC_S,    KC_D,    KC_F,       KC_G,    KC_H,    KC_J,         KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,     KC_Z,    KC_X,    KC_C,    KC_V,       KC_B,    KC_N,    KC_M,         KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    MO(_ADJUST), KC_LCTL, KC_LGUI, KC_LALT, MO(_LOWER),     KC_SPC,       MO(_RAISE),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_ESC,      KC_Q,    KC_W,    KC_E,     KC_R,       KC_T,    KC_Y,    KC_U,         KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_TAB,      KC_A,    KC_S,    KC_D,     KC_F,       KC_G,    KC_H,    KC_J,         KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT,     KC_Z,    KC_X,    KC_C,     KC_V,       KC_B,    KC_N,    KC_M,         KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    KC_LCTL,     KC_LGUI, KC_LALT, BALL_SCR, MO(_LOWER), KC_SPC,  MO(_RAISE),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
   ),
 
   /* Lower
@@ -132,3 +138,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, TO(_BASE), _______,     _______,      TO(_LAYER7), _______, _______, _______, _______
   ),
 };
+
+void keyboard_post_init_user(void) {
+    pimoroni_trackball_set_rgbw(0,0,0,0);
+}
+
+bool set_scrolling = false;
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    if (set_scrolling) {
+        mouse_report.h = mouse_report.x * 0.3;
+        mouse_report.v = mouse_report.y * 0.3;
+        mouse_report.x = mouse_report.y = 0; 
+    }
+    return mouse_report;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (keycode == BALL_SCR) {
+    set_scrolling = record->event.pressed;
+
+    if (set_scrolling) {
+      layer_on(_ADJUST);
+    } else {
+      layer_off(_ADJUST);
+    }
+  }
+  return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case _BASE:
+        pimoroni_trackball_set_rgbw(0,0,0,0);
+        break;
+    case _LOWER:
+        pimoroni_trackball_set_rgbw(0,90,150,0);
+        break;
+    case _RAISE:
+        pimoroni_trackball_set_rgbw(205,140,0,0);
+        break;
+    default: //  for any other layers, or the default layer
+        pimoroni_trackball_set_rgbw(0,205,15,0);
+        break;
+    }
+  return state;
+}
