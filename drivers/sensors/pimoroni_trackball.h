@@ -50,6 +50,10 @@
 #    define PIMORONI_TRACKBALL_TIME_TO_MAX 1000
 #endif
 
+#ifndef PIMORONI_TRACKBALL_SCALE
+#    define PIMORONI_TRACKBALL_SCALE 1
+#endif
+
 typedef struct {
     uint8_t left;
     uint8_t right;

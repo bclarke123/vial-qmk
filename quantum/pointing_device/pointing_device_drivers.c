@@ -345,8 +345,8 @@ report_mouse_t pimoroni_trackball_get_report(report_mouse_t mouse_report) {
                         if (y_neg) {
                             mouse_report.y = -mouse_report.y;
                         }
-                        uint16_t x_amount = (mouse_report.x * speed_modifier) >> 8;
-                        uint16_t y_amount = (mouse_report.y * speed_modifier) >> 8;
+                        uint16_t x_amount = (mouse_report.x * speed_modifier * PIMORONI_TRACKBALL_SCALE) >> 8;
+                        uint16_t y_amount = (mouse_report.y * speed_modifier * PIMORONI_TRACKBALL_SCALE) >> 8;
                         mouse_report.x    = CONSTRAIN_HID_XY((int32_t)x_amount);
                         mouse_report.y    = CONSTRAIN_HID_XY((int32_t)y_amount);
                         if (x_neg) {
