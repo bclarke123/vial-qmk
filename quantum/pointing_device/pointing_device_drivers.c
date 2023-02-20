@@ -361,8 +361,8 @@ report_mouse_t pimoroni_trackball_get_report(report_mouse_t mouse_report) {
                         if (speed_modifier == 0) {
                             speed_modifier = 1;
                         }
-                        mouse_report.x = CONSTRAIN_HID_XY(mouse_report.x * speed_modifier);
-                        mouse_report.y = CONSTRAIN_HID_XY(mouse_report.y * speed_modifier);
+                        mouse_report.x = CONSTRAIN_HID_XY(mouse_report.x * speed_modifier * PIMORONI_TRACKBALL_SCALE);
+                        mouse_report.y = CONSTRAIN_HID_XY(mouse_report.y * speed_modifier * PIMORONI_TRACKBALL_SCALE);
 #    endif // PIMORONI_TRACKBALL_USE_FLOAT
                     }
                 } else {
