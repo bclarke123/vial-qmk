@@ -37,7 +37,7 @@ void doWritePin(pin_t pin, bool high) {
 }
 
 void keyboard_post_init_user(void) {
-   rgb_matrix_set_color_all(RGB_PURPLE);
+   rgb_matrix_disable();
    doWritePin(GP25, false);
 }
 
@@ -47,8 +47,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    doWritePin(GP25, down);
 
    if (down) {
-      rgb_matrix_set_color_all(RGB_PURPLE);
       rgb_matrix_enable();
+      rgb_matrix_mode(RGB_MATRIX_CYCLE_LEFT_RIGHT);
    } else {
       rgb_matrix_disable();
    }
