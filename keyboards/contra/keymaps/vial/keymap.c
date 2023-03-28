@@ -166,20 +166,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+uint8_t r = 0;
+uint8_t g = 0;
+uint8_t b = 0;
+bool change_color = false;
+
 layer_state_t layer_state_set_user(layer_state_t state) {
-    switch (get_highest_layer(state)) {
+  change_color = false;
+
+  switch (get_highest_layer(state)) {
     case _BASE:
-        pimoroni_trackball_set_rgbw(0,0,0,0);
+        r = g = b = 0;
         break;
     case _LOWER:
-        pimoroni_trackball_set_rgbw(0,90,150,0);
+        r = 0;
+        g = 90;
+        b = 150;
+        change_color = true;
         break;
     case _RAISE:
         pimoroni_trackball_set_rgbw(205,140,0,0);
+        r = 205;
+        g = 140;
+        b = 0;
+        change_color = true;
         break;
     default: //  for any other layers, or the default layer
         pimoroni_trackball_set_rgbw(0,205,15,0);
+        r = 0;
+        g = 205;
+        b = 15;
+        change_color = true;
         break;
-    }
+  }
+
+  pimoroni_trackball_set_rgbw(r, g, b, 0);
+
   return state;
+}
+
+void rgb_matrix_indicators_user(void) {
+  if (change_color) {
+    rgb_matrix_set_color_all(r, g, b);
+  }
 }
