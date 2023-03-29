@@ -190,6 +190,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         b = 0;
         change_color = true;
         break;
+    case _ADJUST:
+        r = 80;
+        g = 0;
+        b = 191;
+        change_color = true;
+        break;
     default: //  for any other layers, or the default layer
         r = 0;
         g = 205;
