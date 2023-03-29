@@ -185,14 +185,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         change_color = true;
         break;
     case _RAISE:
-        pimoroni_trackball_set_rgbw(205,140,0,0);
         r = 205;
         g = 140;
         b = 0;
         change_color = true;
         break;
     default: //  for any other layers, or the default layer
-        pimoroni_trackball_set_rgbw(0,205,15,0);
         r = 0;
         g = 205;
         b = 15;
