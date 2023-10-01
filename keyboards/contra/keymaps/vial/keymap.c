@@ -211,6 +211,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void rgb_matrix_indicators_user(void) {
   if (change_color) {
-    rgb_matrix_set_color_all(r, g, b);
+    rgb_matrix_set_color_all(r * 0.1, g * 0.1, b * 0.1);
   }
 }
