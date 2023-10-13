@@ -53,3 +53,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, 
         _______, _______, _______)
 };
+
+void doWritePin(pin_t pin, bool high) {
+   ATOMIC_BLOCK_FORCEON {
+      setPinOutput(pin);
+      if (high) {
+         writePinHigh(pin);
+      } else {
+         writePinLow(pin);
+      }
+   }
+}
+
+void keyboard_post_init_user(void) {
+   doWritePin(GP11, true);
+   rgb_matrix_enable();
+   rgb_matrix_mode(RGB_MATRIX_CYCLE_ALL);
+}
