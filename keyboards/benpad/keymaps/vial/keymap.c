@@ -67,6 +67,4 @@ void doWritePin(pin_t pin, bool high) {
 
 void keyboard_post_init_user(void) {
    doWritePin(GP11, true);
-   rgb_matrix_enable();
-   rgb_matrix_mode(RGB_MATRIX_CYCLE_ALL);
 }

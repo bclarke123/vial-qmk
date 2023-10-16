@@ -6,20 +6,19 @@
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 4
 
-/* key matrix pins */
+/* key matrix pins
 #define MATRIX_ROW_PINS \
     { GP14, GP15, GP26, GP27, GP28 }
 #define MATRIX_COL_PINS \
-    { GP5, GP6, GP7, GP8 }
+    { GP5, GP6, GP7, GP8 } */
+
+#define MATRIX_ROW_PINS \
+    { GP0, GP7, GP6, GP29, GP28 }
+#define MATRIX_COL_PINS \
+    { GP1, GP2, GP4, GP3 }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
-
-/* number of backlight levels */
-
-#ifdef BACKLIGHT_PIN
-#    define BACKLIGHT_LEVELS 0
-#endif
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
@@ -29,6 +28,8 @@
 
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
+
+#define FORCE_NKRO
 
 // #define RGB_DI_PIN GP16
 // #define RGBLED_NUM 25
@@ -41,10 +42,17 @@
 #define RGB_MATRIX_VAL_STEP 8
 #define RGB_MATRIX_SPD_STEP 10
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
+
+#define RGB_MATRIX_LED_PROCESS_LIMIT (DRIVER_LED_TOTAL + 4) / 5
+#define RGB_MATRIX_LED_FLUSH_LIMIT 16
+
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_ALL
+
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
 // https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
@@ -74,13 +82,15 @@
 #define ENABLE_RGB_MATRIX_HUE_BREATHING
 #define ENABLE_RGB_MATRIX_HUE_PENDULUM
 #define ENABLE_RGB_MATRIX_HUE_WAVE
-// #define ENABLE_RGB_MATRIX_PIXEL_RAIN
 #define ENABLE_RGB_MATRIX_PIXEL_FLOW
+// #define ENABLE_RGB_MATRIX_PIXEL_RAIN
 // #define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+
 // enabled only if RGB_MATRIX_FRAMEBUFFER_EFFECTS is defined
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP
 #define ENABLE_RGB_MATRIX_DIGITAL_RAIN
-// enabled only of RGB_MATRIX_KEYPRESSES or RGB_MATRIX_KEYRELEASES is defined
+
+// enabled only if RGB_MATRIX_KEYPRESSES or RGB_MATRIX_KEYRELEASES is defined
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
