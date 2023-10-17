@@ -52,8 +52,6 @@ void rgb_matrix_indicators_user() {
 
       if (slot == i) {
          rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
-      } else {
-         rgb_matrix_set_color(layer_led, RGB_BLACK);
       }
    }
 
