@@ -13,58 +13,55 @@
  */
 
 #include QMK_KEYBOARD_H
-
-enum benpad_layers { _BASE, _LOWER, _RAISE, _ADJUST, _LAYER5 };
+#include <math.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Basic numpad
-    [_BASE] = LAYOUT(
+    [0] = LAYOUT(
         KC_NUM, KC_PSLS, KC_PAST, KC_PMNS,
         KC_P7, KC_P8, KC_P9,
         KC_P4, KC_P5, KC_P6, KC_PPLS,
         KC_P1, KC_P2, KC_P3,
-        KC_P0, KC_PDOT, KC_PENT),
-
-    [_LOWER] = LAYOUT(
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______, 
-        _______, _______, _______),
-
-    [_RAISE] = LAYOUT(
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______, 
-        _______, _______, _______),
-    
-    [_ADJUST] = LAYOUT(
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______, 
-        _______, _______, _______),
-
-    [_LAYER5] = LAYOUT(
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______, 
-        _______, _______, _______)
+        KC_P0, KC_PDOT, KC_PENT)
 };
 
-void doWritePin(pin_t pin, bool high) {
-   ATOMIC_BLOCK_FORCEON {
-      setPinOutput(pin);
-      if (high) {
-         writePinHigh(pin);
+void rgb_matrix_indicators_user() {
+   led_t led_state = host_keyboard_led_state();
+   // bool caps = led_state.caps_lock;
+   bool num = led_state.num_lock;
+
+   HSV hsv = rgb_matrix_get_hsv();
+   float v = rgb_matrix_get_val();
+
+   if (hsv.v > v) {
+      hsv.v = v;
+   }
+
+   RGB rgb = hsv_to_rgb(hsv);
+
+   if (num) {
+      rgb_matrix_set_color(0, rgb.r, rgb.g, rgb.b);
+   }
+
+   int layer = get_highest_layer(layer_state | default_layer_state);
+   int banks = floor(layer / 5);
+   int slot = layer % 5;
+
+   for (int i = 0; i < 5; i++) {
+      int layer_led = (i + 1) * 5 - 1;
+
+      if (slot == i) {
+         rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
       } else {
-         writePinLow(pin);
+         rgb_matrix_set_color(layer_led, RGB_BLACK);
       }
    }
-}
 
-void keyboard_post_init_user(void) {
-   doWritePin(GP11, true);
+   if (banks >= 1) {
+      rgb_matrix_set_color(18, rgb.r, rgb.g, rgb.b);
+   }
+
+   if (banks >= 2) {
+      rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
+   }
 }

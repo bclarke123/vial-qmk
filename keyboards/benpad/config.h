@@ -6,16 +6,11 @@
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 4
 
-/* key matrix pins
+/* key matrix pins */
 #define MATRIX_ROW_PINS \
     { GP14, GP15, GP26, GP27, GP28 }
 #define MATRIX_COL_PINS \
-    { GP5, GP6, GP7, GP8 } */
-
-#define MATRIX_ROW_PINS \
-    { GP0, GP7, GP6, GP29, GP28 }
-#define MATRIX_COL_PINS \
-    { GP1, GP2, GP4, GP3 }
+    { GP8, GP7, GP6, GP5 }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -31,17 +26,19 @@
 
 #define FORCE_NKRO
 
-// #define RGB_DI_PIN GP16
-// #define RGBLED_NUM 25
-#define RGB_DI_PIN GP12
-#define RGBLED_NUM 1
+#define MIDI_ADVANCED
+
+#define RGB_DI_PIN GP16
+#define RGBLED_NUM 25
 #define DRIVER_LED_TOTAL RGBLED_NUM
+
+#define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
 
 #define RGB_MATRIX_HUE_STEP 8
 #define RGB_MATRIX_SAT_STEP 8
 #define RGB_MATRIX_VAL_STEP 8
 #define RGB_MATRIX_SPD_STEP 10
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 128
 
 #define RGB_MATRIX_LED_PROCESS_LIMIT (DRIVER_LED_TOTAL + 4) / 5
 #define RGB_MATRIX_LED_FLUSH_LIMIT 16
@@ -51,7 +48,7 @@
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_ALL
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_BAND_SPIRAL_VAL
 
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
