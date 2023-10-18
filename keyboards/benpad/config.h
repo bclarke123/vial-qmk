@@ -48,7 +48,7 @@
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_BAND_SPIRAL_VAL
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:

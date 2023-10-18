@@ -6,7 +6,7 @@ led_config_t g_led_config = { {
     { 5, 6, 7 },
     { 10, 11, 12, 8 },
     { 15, 16, 17 },
-    { 20, 22, 13}
+    { NO_LED, 20, 21, 22 }
 }, {
     // LED Index to Physical Position
     {  0,  0}, { 56,  0}, {112,  0}, {168,  0}, {224,  0},
