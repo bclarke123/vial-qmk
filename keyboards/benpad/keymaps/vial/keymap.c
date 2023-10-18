@@ -47,13 +47,8 @@ void rgb_matrix_indicators_user() {
    int banks = floor(layer / 5);
    int slot = layer % 5;
 
-   for (int i = 0; i < 5; i++) {
-      int layer_led = (i + 1) * 5 - 1;
-
-      if (slot == i) {
-         rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
-      }
-   }
+   int layer_led = (slot + 1) * 5 - 1;
+   rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
 
    if (banks >= 1) {
       rgb_matrix_set_color(18, rgb.r, rgb.g, rgb.b);
