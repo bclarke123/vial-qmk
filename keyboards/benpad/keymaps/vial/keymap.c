@@ -44,17 +44,19 @@ void rgb_matrix_indicators_user() {
    }
 
    int layer = get_highest_layer(layer_state | default_layer_state);
-   int banks = floor(layer / 5);
-   int slot = layer % 5;
+   int banks = floor(layer / 6);
+   int slot = layer % 6;
 
-   int layer_led = (slot + 1) * 5 - 1;
-   rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
+   int layer_led = slot * 5 - 1;
+   if (layer_led > 0) {
+      rgb_matrix_set_color(layer_led, rgb.r, rgb.g, rgb.b);
+   }
 
-   if (banks >= 1) {
+   if (banks & 1) {
       rgb_matrix_set_color(18, rgb.r, rgb.g, rgb.b);
    }
 
-   if (banks >= 2) {
+   if (banks & 2) {
       rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
    }
 }
