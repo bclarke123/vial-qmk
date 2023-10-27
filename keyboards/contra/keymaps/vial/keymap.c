@@ -28,11 +28,11 @@ enum contra_layers {
   _ARTSEY3,
   _ARTSEY4,
   _ARTSEY5,
+  _ARTSEY6,
   _USER1,
   _USER2,
   _USER3,
-  _USER4,
-  _USER5
+  _USER4
 };
 
 enum custom_keycodes {
@@ -126,5 +126,5 @@ void rgb_matrix_indicators_user(void) {
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
   int layer = get_highest_layer(layer_state | default_layer_state);
-  return layer >= _ARTSEY1 && layer <= _ARTSEY5;
+  return layer >= _ARTSEY1 && layer <= _ARTSEY6;
 }
