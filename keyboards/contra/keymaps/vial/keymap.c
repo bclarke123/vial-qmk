@@ -80,6 +80,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #        define MIN(a, b) ((a) < (b) ? (a) : (b))
 #    endif
 
+#    ifndef MAX
+#        define MAX(a, b) ((a) > (b) ? (a) : (b))
+#    endif
+
+#    ifndef CLAMP
+#        define CLAMP(a, b, c) MAX(b, MIN(c, a))
+#    endif
+
 bool change_color = false;
 
 HSV get_layer_hsv(layer_state_t state) {
@@ -117,8 +125,28 @@ HSV get_layer_hsv(layer_state_t state) {
 }
 
 void set_trackball(RGB rgb) {
-  float w = MIN(rgb.r, MIN(rgb.g, rgb.b));
-  pimoroni_trackball_set_rgbw(rgb.r - w, rgb.g - w, rgb.b - w, w);
+  float _max = MAX(rgb.r, MAX(rgb.g, rgb.b));
+
+  if (_max == 0) {
+    pimoroni_trackball_set_rgbw(0, 0, 0, 0);
+    return;
+  }
+
+  float _mult = 255.0 / _max;
+
+  float hr = rgb.r * _mult;
+  float hg = rgb.g * _mult;
+  float hb = rgb.b * _mult;
+
+  float hMax = MAX(hr, MAX(hg, hb));
+  float hMin = MIN(hr, MIN(hg, hb));
+
+  float w = ((hMax + hMin) / 2.0 - 127.5) * (255.0 / 127.5) / _mult;
+  float r = CLAMP(rgb.r - w, 0.0, 255.0);
+  float g = CLAMP(rgb.g - w, 0.0, 255.0);
+  float b = CLAMP(rgb.b - w, 0.0, 255.0);
+
+  pimoroni_trackball_set_rgbw(r, g, b, w);
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
