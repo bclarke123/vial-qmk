@@ -23,6 +23,7 @@ enum contra_layers {
   _RAISE,
   _ADJUST,
   _FUNC,
+  _WADS,
   _ARTSEY1,
   _ARTSEY2,
   _ARTSEY3,
@@ -75,52 +76,67 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-uint8_t r = 0;
-uint8_t g = 0;
-uint8_t b = 0;
+#    ifndef MIN
+#        define MIN(a, b) ((a) < (b) ? (a) : (b))
+#    endif
+
 bool change_color = false;
+
+HSV get_layer_hsv(layer_state_t state) {
+  HSV hsv = { HSV_BLACK };
+  int layer = get_highest_layer(state);
+
+  if (layer == _BASE) {
+    hsv = (HSV){ HSV_BLACK };
+  } else
+  if (layer == _LOWER) {
+    hsv = (HSV){ HSV_PURPLE };
+    change_color = true;
+  } else
+  if (layer == _RAISE) {
+    hsv = (HSV){ HSV_GOLD };
+    change_color = true;
+  } else
+  if (layer == _ADJUST) {
+    hsv = rgb_matrix_get_hsv();
+    change_color = true;
+  } else
+  if (layer == _FUNC || layer == _WADS) {
+    hsv = (HSV){ HSV_GREEN };
+    change_color = true;
+  } else
+  if (layer >= _ARTSEY1 && layer <= _ARTSEY6) {
+    hsv = (HSV){ HSV_ORANGE };
+    change_color = true;
+  }
+
+  float val = rgb_matrix_get_val();
+  hsv.v = MIN(hsv.v, val);
+
+  return hsv;
+}
+
+void set_trackball(RGB rgb) {
+  float w = MIN(rgb.r, MIN(rgb.g, rgb.b));
+  pimoroni_trackball_set_rgbw(rgb.r - w, rgb.g - w, rgb.b - w, w);
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   change_color = false;
-
-  switch (get_highest_layer(state)) {
-    case _BASE:
-        r = g = b = 0;
-        break;
-    case _LOWER:
-        r = 0;
-        g = 90;
-        b = 150;
-        change_color = true;
-        break;
-    case _RAISE:
-        r = 205;
-        g = 140;
-        b = 0;
-        change_color = true;
-        break;
-    case _ADJUST:
-        r = 80;
-        g = 0;
-        b = 191;
-        change_color = true;
-        break;
-    default: //  for any other layers, or the default layer
-        r = 0;
-        g = 205;
-        b = 15;
-        change_color = true;
-        break;
-  }
-
-  pimoroni_trackball_set_rgbw(r, g, b, 0);
+  HSV hsv = get_layer_hsv(state);
+  RGB rgb = hsv_to_rgb(hsv);
+  set_trackball(rgb);
 
   return state;
 }
 
 void rgb_matrix_indicators_user(void) {
   if (change_color) {
-    rgb_matrix_set_color_all(r * 0.1, g * 0.1, b * 0.1);
+    HSV hsv = get_layer_hsv(layer_state | default_layer_state);
+    RGB rgb = hsv_to_rgb(hsv);
+
+    rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
+    set_trackball(rgb);
   }
 }
 
