@@ -124,13 +124,17 @@ HSV get_layer_hsv(layer_state_t state) {
   return hsv;
 }
 
-void set_trackball(RGB rgb) {
-  float _max = MAX(rgb.r, MAX(rgb.g, rgb.b));
+void set_trackball(HSV hsv) {
 
-  if (_max == 0) {
+  if (hsv.v == 0) {
     pimoroni_trackball_set_rgbw(0, 0, 0, 0);
     return;
   }
+
+  hsv.v = CLAMP(hsv.v * 8.0, 0.0, 255.0); // bump brightness on the ball
+  RGB rgb = hsv_to_rgb(hsv);
+
+  float _max = MAX(rgb.r, MAX(rgb.g, rgb.b));
 
   float _mult = 255.0 / _max;
 
@@ -141,7 +145,7 @@ void set_trackball(RGB rgb) {
   float hMax = MAX(hr, MAX(hg, hb));
   float hMin = MIN(hr, MIN(hg, hb));
 
-  float w = ((hMax + hMin) / 2.0 - 127.5) * (255.0 / 127.5) / _mult;
+  float w = CLAMP(((hMax + hMin) / 2.0 - 127.5) * (255.0 / 127.5) / _mult, 0.0, 255.0);
   float r = CLAMP(rgb.r - w, 0.0, 255.0);
   float g = CLAMP(rgb.g - w, 0.0, 255.0);
   float b = CLAMP(rgb.b - w, 0.0, 255.0);
@@ -152,8 +156,7 @@ void set_trackball(RGB rgb) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   change_color = false;
   HSV hsv = get_layer_hsv(state);
-  RGB rgb = hsv_to_rgb(hsv);
-  set_trackball(rgb);
+  set_trackball(hsv);
 
   return state;
 }
@@ -164,7 +167,7 @@ void rgb_matrix_indicators_user(void) {
     RGB rgb = hsv_to_rgb(hsv);
 
     rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
-    set_trackball(rgb);
+    set_trackball(hsv);
   }
 }
 
