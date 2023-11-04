@@ -134,21 +134,10 @@ void set_trackball(HSV hsv) {
   hsv.v = CLAMP(hsv.v * 8.0, 0.0, 255.0); // bump brightness on the ball
   RGB rgb = hsv_to_rgb(hsv);
 
-  float _max = MAX(rgb.r, MAX(rgb.g, rgb.b));
-
-  float _mult = 255.0 / _max;
-
-  float hr = rgb.r * _mult;
-  float hg = rgb.g * _mult;
-  float hb = rgb.b * _mult;
-
-  float hMax = MAX(hr, MAX(hg, hb));
-  float hMin = MIN(hr, MIN(hg, hb));
-
-  float w = CLAMP(((hMax + hMin) / 2.0 - 127.5) * (255.0 / 127.5) / _mult, 0.0, 255.0);
-  float r = CLAMP(rgb.r - w, 0.0, 255.0);
-  float g = CLAMP(rgb.g - w, 0.0, 255.0);
-  float b = CLAMP(rgb.b - w, 0.0, 255.0);
+  float w = MIN(rgb.r, MIN(rgb.g, rgb.b));
+  float r = rgb.r - w;
+  float g = rgb.g - w;
+  float b = rgb.b - w;
 
   pimoroni_trackball_set_rgbw(r, g, b, w);
 }
