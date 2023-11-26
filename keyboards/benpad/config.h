@@ -1,7 +1,5 @@
 #pragma once
 
-#include "config_common.h"
-
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
 
@@ -15,6 +13,7 @@
 #define DRIVER_LED_TOTAL 25
 
 #define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
+#define WS2812_DI_PIN GP16
 
 #define RGB_MATRIX_HUE_STEP 8
 #define RGB_MATRIX_SAT_STEP 8

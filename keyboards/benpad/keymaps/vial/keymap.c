@@ -25,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P0, KC_PDOT, KC_PENT)
 };
 
-void rgb_matrix_indicators_user() {
+bool rgb_matrix_indicators_user() {
    led_t led_state = host_keyboard_led_state();
    // bool caps = led_state.caps_lock;
    bool num = led_state.num_lock;
@@ -59,4 +59,6 @@ void rgb_matrix_indicators_user() {
    if (banks & 2) {
       rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
    }
+
+   return true;
 }
