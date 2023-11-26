@@ -15,14 +15,19 @@ COMMAND_ENABLE = no        # Commands for debug and configuration
 NKRO_ENABLE = yes           # Enable N-Key Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 AUDIO_ENABLE = no           # Audio output
+RGBLIGHT_SUPPORTED = no
 
 LAYOUTS = planck_mit ortho_4x12
-LAYOUTS_HAS_RGB = no
+# LAYOUTS_HAS_RGB = no
 
 # Disable unsupported hardware
-RGBLIGHT_SUPPORTED = no
 AUDIO_SUPPORTED = no
 BACKLIGHT_SUPPORTED = no
 
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pimoroni_trackball
+
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = WS2812
+WS2812_DRIVER = vendor
