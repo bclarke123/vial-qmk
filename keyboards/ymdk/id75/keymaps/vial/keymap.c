@@ -50,3 +50,71 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   )
 };
+#define MAGIC_BOOT 0x544F4F42UL
+#define MAGIC_REG *(volatile uint32_t*)0x20004000
+void bootloader_jump(void) {
+    MAGIC_REG = MAGIC_BOOT;
+    NVIC_SystemReset();
+}
+
+uint8_t current_layer = 0;
+layer_state_t layer_state_set_user(layer_state_t state) {
+  current_layer = get_highest_layer(state);
+  return state;
+}
+
+const uint8_t W = 57;
+const uint8_t A = 43;
+const uint8_t S = 42;
+const uint8_t D = 41;
+
+void rgb_matrix_indicators_user(void) {
+
+  uint8_t r = 0;
+  uint8_t g = 0;
+  uint8_t b = 0;
+  bool change_color = false;
+  bool final_fantasy = false;
+
+  switch(current_layer) {
+    case 0: break;
+    case 1:
+      r = 200;
+      change_color = true;
+    break;
+    case 2:
+      b = 200;
+      change_color = true;
+    break;
+    case 5:
+      r = 80;
+      b = 191;
+      change_color = true;
+      final_fantasy = true;
+    break;
+    default:
+      r = g = 200;
+      change_color = true;
+  }
+
+  if (change_color) {
+    for (int i = 75; i < 89; i++) {
+      rgb_matrix_set_color(i, r, g, b);
+    }
+  }
+
+  if (final_fantasy) {
+    for (int i = 0; i < 5; i++) {
+      for (int j = 0; j < 8; j++) {
+        uint8_t index = i * 15 + j;
+        rgb_matrix_set_color(index, 0, 0, 0);
+      }
+    }
+
+    rgb_matrix_set_color(W, r, g, b);
+    rgb_matrix_set_color(A, r, g, b);
+    rgb_matrix_set_color(S, r, g, b);
+    rgb_matrix_set_color(D, r, g, b);
+
+  }
+}
