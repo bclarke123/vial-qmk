@@ -14,15 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include "pointing_device_internal.h"
 #include "pimoroni_trackball.h"
-<<<<<<< HEAD
-#include "i2c_master.h"
-    =======
 #include "print.h"
 #include "debug.h"
-    >>>>>>> 363914200d (Support pimoroni trackball, fix up acceleration)
 #include "timer.h"
 
 // clang-format off
@@ -34,9 +28,9 @@
 #define PIMORONI_TRACKBALL_REG_RIGHT   0x05
 #define PIMORONI_TRACKBALL_REG_UP      0x06
 #define PIMORONI_TRACKBALL_REG_DOWN    0x07
-    // clang-format on
+// clang-format on
 
-    static uint8_t  max_speed       = 10;
+static uint8_t      max_speed       = 10;
 static i2c_status_t last_i2c_status = I2C_STATUS_SUCCESS;
 
 uint8_t pimoroni_trackball_get_max_speed(void) {

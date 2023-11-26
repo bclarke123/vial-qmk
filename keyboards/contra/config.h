@@ -1,7 +1,5 @@
 #pragma once
 
-#include "config_common.h"
-
 /* key matrix size */
 #define MATRIX_ROWS 4
 #define MATRIX_COLS 12
@@ -37,12 +35,13 @@
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
 
-#define I2C_DRIVER I2CD1
+#define I2C_DRIVER I2CD0
 #define I2C1_SDA_PIN GP16
 #define I2C1_SCL_PIN GP17
 #define F_SCL 250000
 
-#define RGB_DI_PIN GP25
+// #define RGB_DI_PIN GP25
+#define WS2812_DI_PIN GP25
 #define RGBLED_NUM 25
 #define DRIVER_LED_TOTAL RGBLED_NUM
 

@@ -37,7 +37,7 @@ enum contra_layers {
 };
 
 enum custom_keycodes {
-    BALL_SCR = USER00
+    BALL_SCR = QK_KB
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -150,7 +150,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
-void rgb_matrix_indicators_user(void) {
+bool rgb_matrix_indicators_user(void) {
   if (change_color) {
     HSV hsv = get_layer_hsv(layer_state | default_layer_state);
     RGB rgb = hsv_to_rgb(hsv);
@@ -158,6 +158,7 @@ void rgb_matrix_indicators_user(void) {
     rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
     set_trackball(hsv);
   }
+  return true;
 }
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
