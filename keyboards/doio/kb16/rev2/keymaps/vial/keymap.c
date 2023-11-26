@@ -18,7 +18,9 @@
 #include QMK_KEYBOARD_H
 
 // OLED animation
-#include "lib/layer_status/layer_status.h"
+
+#include "quantum.h"
+#include "lib/layer_status/bongocat.h"
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -124,7 +126,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef OLED_ENABLE
     bool oled_task_user(void) {
-        render_layer_status();
+        uint16_t layer = get_highest_layer(layer_state);
+        
+        render_bongocat();
+
+        oled_set_cursor(15, 2);
+        oled_write(get_u8_str(layer, ' '), false);
 
         return true;
     }

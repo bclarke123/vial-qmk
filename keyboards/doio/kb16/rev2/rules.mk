@@ -1,4 +1,5 @@
-SRC += ./lib/layer_status/layer_status.c
+# SRC += ./lib/layer_status/layer_status.c
+SRC += ./lib/layer_status/bongocat.c
 SRC += ./lib/logo.c
 
 <<<<<<< HEAD

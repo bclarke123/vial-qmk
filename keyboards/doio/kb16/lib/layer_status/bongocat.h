@@ -1,5 +1,4 @@
-/* Copyright 2022 DOIO
- * Copyright 2022 HorrorTroll <https://github.com/HorrorTroll>
+/* Copyright 2022 HorrorTroll <https://github.com/HorrorTroll>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +14,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-void render_logo(void);
-
-void render_blank(void);
+void render_bongocat(void);
