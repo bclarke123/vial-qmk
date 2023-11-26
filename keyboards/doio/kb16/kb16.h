@@ -1,4 +1,5 @@
-/* Copyright 2022 HorrorTroll <https://github.com/HorrorTroll>
+/* Copyright 2022 DOIO
+ * Copyright 2022 HorrorTroll <https://github.com/HorrorTroll>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,4 +17,10 @@
 
 #pragma once
 
-void render_bongocat(void);
+#include "quantum.h"
+
+#if defined(KEYBOARD_doio_kb16_rev1)
+    #include "rev1.h"
+#elif defined(KEYBOARD_doio_kb16_rev2)
+    #include "rev2.h"
+#endif
