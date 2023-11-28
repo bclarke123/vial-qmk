@@ -10,8 +10,8 @@
 #define MATRIX_COL_PINS \
     { GP29, GP28, GP9, GP8, GP7, GP6, GP5, GP4, GP3, GP2, GP1, GP0 }
 
-#define QMK_WAITING_TEST_BUSY_PIN GP8
-#define QMK_WAITING_TEST_YIELD_PIN GP9
+// #define QMK_WAITING_TEST_BUSY_PIN GP8
+// #define QMK_WAITING_TEST_YIELD_PIN GP9
 
 // #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 // #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP25
@@ -19,12 +19,6 @@
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
-
-/* number of backlight levels */
-
-#ifdef BACKLIGHT_PIN
-#    define BACKLIGHT_LEVELS 0
-#endif
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
