@@ -30,6 +30,8 @@
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_REACTIVE_SIMPLE
+#define RGB_MATRIX_DEFAULT_HUE 170
+#define RGB_MATRIX_DEFAULT_VAL 64
 
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
